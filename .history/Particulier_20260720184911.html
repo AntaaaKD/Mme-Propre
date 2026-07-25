@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mme Propre — Services de nettoyage premium à Dakar</title>
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- Inclusion de l'API Cloudflare Turnstile -->
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
+<style>
+  :root{
+    --surface:#F7FBF9;
+    --surface-2:#ECF5F0;
+    --ink:#0E241E;
+    --ink-soft:#3E5A52;
+    --blue:#1D6FA5;
+    --blue-deep:#124A6E;
+    --mint:#3FB88C;
+    --lemon:#F2C230;
+    --line:#D6E6DE;
+    --radius:18px;
+    --display:"Archivo Black", sans-serif;
+    --body:"Work Sans", sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;padding:0;background:var(--surface);color:var(--ink);font-family:var(--body);scroll-behavior: smooth;}
+  a{text-decoration:none;color:inherit;}
+
+  /* ---------- HEADER ---------- */
+  header{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:22px 6vw;
+    background:rgba(247, 251, 249, 0.8);
+    position: sticky; top:0; z-index: 100;
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid transparent;
+  }
+  header.scrolled { border-bottom-color: var(--line); }
+  .logo{ display:flex; align-items:center; }
+  .logo-img{ height:50px; width:auto; display:block; }
+  
+  .header-cta{
+    font-size:14px;font-weight:600;color:#fff;
+    background:var(--blue-deep); border-radius:999px;
+    padding:10px 22px; transition: transform .2s ease;
+  }
+  .header-cta:hover{ transform: translateY(-2px); }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative; padding:6vh 6vw 10vh; overflow:hidden;
+  }
+  .hero-grid{
+    position:relative;z-index:2;
+    display:grid;grid-template-columns:1.1fr 0.9fr;gap:56px;align-items:center;
+  }
+  @media (max-width:860px){
+    .hero-grid{grid-template-columns:1fr; gap:40px;}
+    .hero-image{max-height:320px;}
+  }
+  .hero-image{
+    position:relative;border-radius:24px;overflow:hidden;
+    box-shadow:0 24px 50px rgba(14,36,30,0.12); aspect-ratio:1.1;
+  }
+  .hero-image img{ width:100%;height:100%;object-fit:cover;display:block; }
+  
+  .eyebrow{
+    font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+    color:var(--mint);margin-bottom:18px;
+  }
+  h1{
+    font-family:var(--display); font-size:clamp(36px,5.5vw,64px);
+    line-height:1.05; margin:0 0 22px; max-width:15ch;
+  }
+  h1 .accent{color:var(--blue);}
+  .hero p{
+    font-size:18px;color:var(--ink-soft);max-width:46ch;line-height:1.6;margin:0 0 32px;
+  }
+  .hero-actions { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--mint); color: #fff; font-weight: 700; padding: 16px 32px;
+    border-radius: 999px; box-shadow: 0 8px 24px rgba(63,184,140,0.25);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(63,184,140,0.4); }
+  .btn-secondary { font-weight: 600; color: var(--blue-deep); padding: 16px 24px; }
+
+  /* ---------- OFFRES / SERVICES ---------- */
+  .services { padding: 10vh 6vw; background: #fff; border-top: 1px solid var(--line); }
+  .section-title { text-align: center; margin-bottom: 60px; }
+  .section-title h2 { font-family: var(--display); font-size: clamp(28px, 4vw, 42px); margin: 0 0 12px; }
+  .section-title p { color: var(--ink-soft); font-size: 16px; max-width: 50ch; margin: 0 auto; }
+  
+  .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+  .service-card {
+    border: 1.5px solid var(--line); border-radius: 20px; padding: 32px;
+    transition: transform .2s, border-color .2s; background: var(--surface);
+  }
+  .service-card:hover { transform: translateY(-4px); border-color: var(--blue); }
+  .service-icon { font-size: 32px; margin-bottom: 16px; }
+  .service-card h3 { font-family: var(--display); font-size: 20px; margin: 0 0 12px; color: var(--blue-deep); }
+  .service-card p { font-size: 14.5px; color: var(--ink-soft); line-height: 1.6; margin: 0; }
+
+  /* ---------- FORMULAIRE CLIENT ---------- */
+  .panel{ background:var(--surface-2); border-top:1px solid var(--line); padding:10vh 6vw; }
+  .panel-inner { max-width: 720px; margin: 0 auto; }
+  .panel h2{ font-family:var(--display); font-size:clamp(26px,3.4vw,38px); margin:0 0 32px; text-align: center;}
+
+  .grid{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  @media (max-width:600px) { .grid{ grid-template-columns:1fr; } }
+
+  .field{ display:flex; flex-direction:column; gap:8px; }
+  .field.full{ grid-column:1/-1; }
+  label{ font-size:13px; font-weight:600; color:var(--ink-soft); }
+  input, select, textarea{
+    font-family:var(--body); font-size:15px; border:1.5px solid var(--line);
+    border-radius:12px; padding:14px 16px; background:#fff; color:var(--ink);
+    outline:none; transition:border-color .18s ease;
+  }
+  input:focus, select:focus, textarea:focus{ border-color:var(--blue); background: #fff; }
+  textarea{ resize:vertical; min-height:100px; }
+
+  /* Honeypot anti-bot */
+  .hp-field { display: none !important; }
+
+  .submit-row{ margin-top:32px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px;}
+  .btn-submit{
+    background:var(--blue-deep); color:#fff; border:none; border-radius:999px;
+    padding:16px 40px; font-family:var(--body); font-weight:700; font-size:16px; cursor:pointer;
+    transition: transform .15s ease, box-shadow .15s ease; width: 100%; max-width: 320px;
+  }
+  .btn-submit:hover{ transform:translateY(-2px); box-shadow:0 8px 22px rgba(18,74,110,0.25); }
+  .hint{ font-size:13px; color:var(--ink-soft); }
+
+  footer{
+    padding:32px 6vw; border-top:1px solid var(--line); font-size:13px; color:var(--ink-soft);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px; background: #fff;
+  }
+</style>
+</head>
+<body>
+
+<header id="navbar">
+  <div class="logo">
+    <img src="images/logo-mmepropre.png" alt="Mme Propre" class="logo-img">
+  </div>
+  <a class="header-cta" href="#devis">Demander un devis</a>
+</header>
+
+<section class="hero">
+  <div class="hero-grid">
+    <div>
+      <div class="eyebrow">Dakar · Conciergerie & Nettoyage</div>
+      <h1>Votre espace impeccable, <span class="accent">sans effort.</span></h1>
+      <p>Mme Propre réinvente le nettoyage résidentiel et professionnel à Dakar. Profitez d'interventions sur-mesure, réalisées par des agents de confiance rigoureusement sélectionnés.</p>
+      
+      <div class="hero-actions">
+        <a href="#devis" class="btn-primary">Estimer mon tarif</a>
+        <a href="#offres" class="btn-secondary">Découvrir nos offres ↓</a>
+      </div>
+    </div>
+
+    <div class="hero-image">
+      <img src="images/hero.jpg" alt="Nettoyage professionnel de maison à Dakar">
+    </div>
+  </div>
+</section>
+
+<section class="services" id="offres">
+  <div class="section-title">
+    <h2>Nos Formules sur Mesure</h2>
+    <p>Qu'il s'agisse de votre domicile ou de vos locaux professionnels, nous avons une solution adaptée à votre rythme.</p>
+  </div>
+  
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">🧹</div>
+      <h3>Nettoyage Standard</h3>
+      <p>Idéal pour l'entretien régulier : dépoussiérage, aspiration, lavage des sols, désinfection des sanitaires et de la cuisine. Disponible à la carte ou en abonnement.</p>
+    </div>
+    
+    <div class="service-card">
+      <div class="service-icon">✨</div>
+      <h3>Grand Nettoyage</h3>
+      <p>Une remise à neuf en profondeur de vos espaces : vitres intérieures/extérieures, recoins difficiles, lessivage des portes et nettoyage minutieux des placards.</p>
+    </div>
+    
+    <div class="service-card">
+      <div class="service-icon">🏢</div>
+      <h3>Fin de Chantier & Communs</h3>
+      <p>Destiné aux promoteurs et particuliers après travaux ou déménagement. Élimination des traces de plâtre, peinture, voile de ciment et poussière fine.</p>
+    </div>
+  </div>
+</section>
+
+<section class="panel" id="devis">
+  <div class="panel-inner">
+    <h2>Planifier une intervention</h2>
+    
+    <form id="devis-form">
+    <div class="grid">
+      <div class="field">
+        <label for="c-nom">Nom complet</label>
+        <input id="c-nom" type="text" required maxlength="80" placeholder="Ex : Fatou Diop">
+      </div>
+      <div class="field">
+        <label for="c-tel">Numéro WhatsApp</label>
+        <input id="c-tel" type="tel" required pattern="^(\\+221)?[0-9 ]{9,15}$"placeholder="Ex : 77 000 00 00">
+      </div>
+      <div class="field">
+        <label for="c-type">Type de local</label>
+        <select id="c-type" required>
+          <option value="Appartement">Appartement</option>
+          <option value="Residence / Immeuble">Résidence / Immeuble</option>
+          <option value="Villa / Maison">Villa / Maison</option>
+          <option value="Airbnb">Airbnb</option>
+          <option value="Bureaux / Locaux pro">Bureaux / Locaux professionnels</option>
+          <option value="Autre">Autre</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="c-formule">Formule souhaitée</label>
+        <select id="c-formule" required>
+          <option value="Standard">Nettoyage Standard (Régulier)</option>
+          <option value="Grand Nettoyage">Grand Nettoyage (En profondeur)</option>
+          <option value="Fin de chantier">Fin de chantier / Finitions / Déménagement</option>
+        </select>
+      </div>
+      <div class="field full">
+        <label for="c-adresse">Adresse à Dakar</label>
+        <input id="c-adresse" type="text" maxlength="150" placeholder="Ex : Almadies, Mermoz, Plateau, Parcelles...">
+      </div>
+
+      <div class="field full">
+        <label for="c-frequence">À quelle fréquence souhaitez-vous le service ?</label>
+        <select id="c-frequence" required>
+          <option value="Unique">Intervention unique</option>
+          <option value="Hebdomadaire">Chaque semaine</option>
+          <option value="Bi-mensuel">Deux fois par mois</option>
+          <option value="Mensuel">Chaque mois</option>
+          <option value="Conseil">Autre</option>
+        </select>
+      </div>  
+
+      <div class="field full">
+        <label for="c-msg">Précisions particulières (Surface en m², nombre de pièces, besoins spécifiques...)</label>
+        <textarea id="c-msg" maxlength="600" placeholder="Ex : Appartement F4 aux Almadies, besoin d'un nettoyage après peinture des murs..."></textarea>
+      </div>
+      
+      <!-- Anti-bot Honeypot invisible pour les humains -->
+      <div class="field full hp-field">
+        <label for="c-email-confirm">Ne pas remplir ce champ si vous êtes humain</label>
+        <input id="c-email-confirm" type="text" autocomplete="off">
+      </div>
+
+      <!-- Widget Cloudflare Turnstile -->
+      <div class="field full" style="display: flex; justify-content: center; margin-top: 10px;">
+        <div class="cf-turnstile" data-sitekey="0x4AAAAAAA....VOTRE_CLE_PUBLIQUE...."></div>
+      </div>
+    </div>
+    </form>
+
+    <div class="submit-row">
+      <button class="btn-submit" id="submit-btn" onclick="submitDemande()">Demander mon devis</button>
+      <span class="hint" id="submit-status">Notre équipe vous recontacte rapidement pour établir votre devis.</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Mme Propre — Dakar, Sénégal</span>
+  <span>La propreté de votre demeure, en un clic.</span>
+</footer>
+
+<script>
+  const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbztkSX3TyebbLAMASZva5rAbgVcuSgHpPOw3mWZLaVD60Z6R83ZnjcCemumw_IpcYI8/exec";
+
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  async function submitDemande() {
+    const btn = document.getElementById('submit-btn');
+    const status = document.getElementById('submit-status');
+
+    // 1. Détection Honeypot
+    const honeypot = document.getElementById('c-email-confirm').value;
+    if (honeypot.length > 0) {
+      status.textContent = "Demande reçue avec succès ✓";
+      return;
+    }
+
+    // 2. Récupération du token Turnstile
+    const turnstileResponse = document.querySelector('[name="cf-turnstile-response"]');
+    const turnstileToken = turnstileResponse ? turnstileResponse.value : "";
+
+    if (!turnstileToken) {
+      status.textContent = "Veuillez valider le défi de sécurité anti-bot.";
+      status.style.color = "#B3261E";
+      return;
+    }
+
+    const nom = document.getElementById('c-nom').value.trim();
+    const tel = document.getElementById('c-tel').value.trim();
+    const typeLocal = document.getElementById('c-type').value;
+    const formule = document.getElementById('c-formule').value;
+    const adresse = document.getElementById('c-adresse').value.trim();
+    const frequence = document.getElementById('c-frequence').value;
+    const message = document.getElementById('c-msg').value.trim();
+
+    if (!nom || !tel || !adresse) {
+      status.textContent = "Veuillez remplir votre nom, numéro WhatsApp et adresse.";
+      status.style.color = "#B3261E";
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = "Envoi de la demande...";
+    status.style.color = "";
+    status.textContent = "Nous configurons votre demande de devis...";
+
+    try {
+      await fetch(GAS_WEB_APP_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({ nom, tel, typeLocal, formule, adresse, frequence, message, turnstileToken })
+      });
+
+      btn.textContent = "Demande reçue ✓";
+      btn.disabled=true;
+      status.style.color = "#3FB88C";
+      status.textContent = "C'est parfait ! Notre équipe vous recontacte sur WhatsApp très rapidement.";
+      
+      document.getElementById("devis-form")
+.reset();
+      if (typeof turnstile !== 'undefined') 
+      if(window.turnstile){turnstile.reset();}
+      
+    } catch (err) {
+      btn.disabled = false;
+      btn.textContent = "Demander mon devis";
+      status.style.color = "#B3261E";
+      status.textContent = "Une erreur technique est survenue. Veuillez réessayer.";
+    }
+  }
+</script>
+
+</body>
+</html>
