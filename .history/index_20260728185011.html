@@ -339,8 +339,7 @@
     </div>
 
     <div class="submit-row">
-      <button class="btn-whatsapp" id="submit-btn">Envoyer ma demande</button>
-      <button class="btn-whatsapp-outline" id="wa-direct-btn">Ou nous écrire sur WhatsApp</button>
+      
     </div>
     <div class="hint" id="submit-status" style="margin-top:14px;">On vous répond généralement sous 24h.</div>
     <p class="privacy-note">En envoyant ce formulaire, vous acceptez que Mme Propre conserve ces informations pour vous recontacter au sujet de votre demande. Elles ne sont ni revendues, ni partagées avec des tiers.</p>
@@ -460,9 +459,6 @@
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
     window.open(url, '_blank');
   }
-
-document.getElementById('submit-btn').addEventListener('click', submitDevis);
-document.getElementById('wa-direct-btn').addEventListener('click', sendWhatsappDirect);
 </script>
 
 </body>
