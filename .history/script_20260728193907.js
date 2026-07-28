@@ -1,5 +1,5 @@
 // ⚠️ Remplacez par le vrai numéro WhatsApp (format international, sans + ni espaces, ex: "221771234567")
-const WHATSAPP_NUMBER = "221775730664";
+const WHATSAPP_NUMBER = "221775736406";
 const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbztkSX3TyebbLAMASZva5rAbgVcuSgHpPOw3mWZLaVD60Z6R83ZnjcCemumw_IpcYI8/exec";
 
 document.getElementById('direct-wa').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Bonjour Mme Propre, j'ai une question 👋")}`;
