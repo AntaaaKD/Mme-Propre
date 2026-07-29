@@ -2,8 +2,8 @@
 const WHATSAPP_NUMBER = "221775730664";
 const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbztkSX3TyebbLAMASZva5rAbgVcuSgHpPOw3mWZLaVD60Z6R83ZnjcCemumw_IpcYI8/exec";
 
-document.getElementById('direct-wa').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Bonjour Mme Propre, j'ai une question 👋")}`;
-document.getElementById('direct-wa1').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Bonjour Mme Propre, j'ai une question 👋")}`;
+  <a class="header-cta header-cta-w" id="direct-wa1" href="#" target="_blank" rel="noopener">Contacter Mme Propre sur WhatsApp</a>
+document.getElementById('direct-wa,').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Bonjour Mme Propre, j'ai une question 👋")}`;
 
 function getDevisData(){
   return {
